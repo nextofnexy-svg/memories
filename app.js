@@ -1,4 +1,3 @@
-```javascript
 ;(() => {
   const $ = id => document.getElementById(id);
   const bucket = "riaa";
@@ -188,4 +187,3 @@
     if (data.session) refresh();
   });
 })();
-```
