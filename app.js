@@ -1,8 +1,9 @@
+```javascript
 (() => {
   const $ = id => document.getElementById(id);
   const bucket = "riaa";
   const loginEmail = "kashmfnga@gmail.com";
-  const allowedUsername = "ria";
+  const allowedUsername = "memories";
 
   const url = window.SUPABASE_URL;
   const key = window.SUPABASE_PUBLISHABLE_KEY;
@@ -68,7 +69,7 @@
       caption.textContent = file.name
         .replace(/^\d+-/, "")
         .replace(/\.[^.]+$/, "")
-        .replace(/[-_]/g, " ") || "A memory ♡";
+        .replace(/[-_]/g, " ") || "A memory";
 
       const del = document.createElement("button");
       del.className = "delete";
@@ -83,7 +84,7 @@
 
         setMsg(
           "galleryMsg",
-          deleteError ? deleteError.message : "Photo removed ♡"
+          deleteError ? deleteError.message : "Photo removed"
         );
 
         if (!deleteError) refresh();
@@ -167,7 +168,7 @@
     }
 
     $("uploadForm").reset();
-    setMsg("uploadMsg", "Memory added ♡");
+    setMsg("uploadMsg", "Memory added");
     refresh();
   };
 
@@ -185,3 +186,4 @@
     }
   });
 })();
+```
