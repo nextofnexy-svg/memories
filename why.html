@@ -1,1 +1,72 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why I Like You ♡</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.letter {
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
+.letter p {
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section id="login" class="panel login">
+<div class="heart">♡</div>
+<p class="eyebrow">A LITTLE SOMETHING FOR YOU</p>
+<h1>Why I Like You</h1>
+<p class="muted">There's something I want you to know.</p>
+
+<form id="loginForm">
+<label>Password</label>
+<input id="password" type="password" required
+autocomplete="current-password"
+placeholder="Enter the password">
+<button type="submit">Read my letter ♡</button>
+</form>
+<p id="loginMsg" class="msg"></p>
+</section>
+
+<section id="letterPage" class="panel letter hidden">
+<div class="heart">♡</div>
+<p class="eyebrow">FROM ME TO YOU</p>
+<h1>Why I Like You ♡</h1>
+<p>Honestly, I don't even know where to start explaining how much you mean to me. You came into my life at a time when I was struggling with depression, and you helped me get through some really difficult days without even realizing how much of a difference you were making. Before I met you, I genuinely didn't think I could like someone online again, but then you came along and changed the way I saw things. You're so sweet, caring, and understanding, and talking to you makes my days feel a little brighter. What makes you different from the people in Deshoodd is that you actually feel genuine. You're not like the people who made me lose hope in getting close to someone online. You make me feel like there are still people who care, people who are worth getting to know, and people who can make a real difference in someone's life just by being themselves. I love how you treat me, how you make me smile, and all the little things about you that you probably don't even notice. I'm genuinely glad I met you, because if I hadn't, I would've missed out on getting to know someone as amazing as you. I hope you know that you don't have to be perfect or do anything extraordinary for me to appreciate you. Just being you is enough. Thank you for being so sweet to me and for making me believe that I could feel this way about someone online again. You mean more to me than I can properly explain, and I'm really happy that I got to meet you. ♡</p>
+<footer>made with love ♡</footer>
+</section>
+</main>
+
+<script>
+const correctPassword = "CHANGE_THIS_PASSWORD";
+
+const login = document.getElementById("login");
+const letterPage = document.getElementById("letterPage");
+const loginForm = document.getElementById("loginForm");
+const passwordInput = document.getElementById("password");
+const loginMsg = document.getElementById("loginMsg");
+
+loginForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (passwordInput.value === correctPassword) {
+    login.classList.add("hidden");
+    letterPage.classList.remove("hidden");
+    passwordInput.value = "";
+  } else {
+    loginMsg.textContent = "Incorrect password. Try again ♡";
+    passwordInput.value = "";
+  }
+});
+</script>
+</body>
+</html>
+
