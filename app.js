@@ -1,4 +1,3 @@
-```javascript
 (() => {
   const $ = id => document.getElementById(id);
   const bucket = "riaa";
@@ -7,27 +6,27 @@
 
   const url = window.SUPABASE_URL;
   const key = window.SUPABASE_PUBLISHABLE_KEY;
+  const configured = url && key &&
+    !url.includes("PASTE_") && !key.includes("PASTE_");
 
   const setMsg = (id, message) => {
-    const element = $(id);
-    if (element) element.textContent = message;
+    $(id).textContent = message;
   };
 
-  const show = loggedIn => {
-    $("login").classList.toggle("hidden", loggedIn);
-    $("galleryPage").classList.toggle("hidden", !loggedIn);
+  const show = ok => {
+    $("login").classList.toggle("hidden", ok);
+    $("galleryPage").classList.toggle("hidden", !ok);
   };
 
-  if (!url || !key || !window.supabase) {
-    setMsg("loginMsg", "Setup error: check config.js and reload.");
+  if (!configured) {
+    setMsg("loginMsg", "Setup needed: check config.js.");
+    $("loginForm").addEventListener("submit", e => e.preventDefault());
     return;
   }
 
   const db = window.supabase.createClient(url, key);
 
   async function refresh() {
-    setMsg("galleryMsg", "Loading memories…");
-
     const { data, error } = await db.storage
       .from(bucket)
       .list("", {
@@ -84,24 +83,25 @@
 
         setMsg(
           "galleryMsg",
-          deleteError ? deleteError.message : "Photo removed."
+          deleteError ? deleteError.message : "Photo removed"
         );
 
-        if (!deleteError) await refresh();
+        if (!deleteError) refresh();
       };
 
       card.append(img, caption, del);
       gallery.append(card);
     }
 
-    setMsg(
-      "galleryMsg",
-      items.length ? "" : "No memories yet. Add your first photo above."
-    );
+    if (!items.length) {
+      setMsg("galleryMsg", "No memories yet. Add your first photo above.");
+    } else {
+      setMsg("galleryMsg", "");
+    }
   }
 
-  $("loginForm").addEventListener("submit", async event => {
-    event.preventDefault();
+  $("loginForm").onsubmit = async e => {
+    e.preventDefault();
 
     const username = $("email").value.trim().toLowerCase();
     const password = $("password").value;
@@ -113,24 +113,23 @@
 
     setMsg("loginMsg", "Signing in…");
 
-    const { data, error } = await db.auth.signInWithPassword({
+    const { error } = await db.auth.signInWithPassword({
       email: loginEmail,
       password
     });
 
     if (error) {
-      console.error("Supabase sign-in error:", error.message);
-      setMsg("loginMsg", "Login failed. Check your password and try again.");
+      setMsg("loginMsg", "Incorrect username or password.");
       return;
     }
 
     $("loginForm").reset();
     show(true);
-    await refresh();
-  });
+    refresh();
+  };
 
-  $("uploadForm").addEventListener("submit", async event => {
-    event.preventDefault();
+  $("uploadForm").onsubmit = async e => {
+    e.preventDefault();
 
     const file = $("photo").files[0];
     if (!file) return;
@@ -168,24 +167,21 @@
     }
 
     $("uploadForm").reset();
-    setMsg("uploadMsg", "Memory added.");
-    await refresh();
-  });
+    setMsg("uploadMsg", "Memory added");
+    refresh();
+  };
 
-  $("logout").addEventListener("click", async () => {
+  $("logout").onclick = async () => {
     await db.auth.signOut();
     show(false);
-  });
+  };
 
-  db.auth.getSession().then(({ data, error }) => {
-    if (error) {
-      console.error("Session check failed:", error.message);
+  db.auth.getSession().then(({ data }) => {
+    if (data.session) {
+      show(true);
+      refresh();
+    } else {
       show(false);
-      return;
     }
-
-    show(Boolean(data.session));
-    if (data.session) refresh();
   });
 })();
-```
