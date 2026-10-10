@@ -1,73 +1,96 @@
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Our Memories</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Memories</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
 </head>
 <body>
-<main class="wrap">
-<section id="login" class="panel login">
-<div class="heart">♡</div>
-<p class="eyebrow">FRIENDS AND GOOD TIMES</p>
-<h1>Our Memories</h1>
-<p class="muted">A collection of moments worth remembering.</p>
+  <main class="container">
+    <section id="login">
+      <div class="logo">♡</div>
+      <p>FRIENDS AND GOOD TIMES</p>
+      <h1>Our Memories</h1>
+      <p>A collection of moments worth remembering.</p>
 
-<form id="loginForm">
-<label>Username</label>
-<input id="email" type="text" required autocomplete="username" placeholder="Enter username">
+      <form id="loginForm">
+        <label for="email">Username</label>
+        <input
+          id="email"
+          name="username"
+          type="text"
+          placeholder="Enter username"
+          autocomplete="username"
+          required
+        >
 
-<label>Password</label>
-<input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Enter password"
+          autocomplete="current-password"
+          required
+        >
 
-<button>View memories</button>
-</form>
-<p id="loginMsg" class="msg"></p>
-</section>
+        <button type="submit">View memories</button>
+        <p id="loginMsg" role="status"></p>
+      </form>
+    </section>
 
-<section id="galleryPage" class="hidden">
-<header>
-<p class="eyebrow">FRIENDS, PHOTOS, AND GOOD TIMES</p>
-<h1>Our Memories <span>♡</span></h1>
-<p class="muted">Good times, funny moments, and memories worth keeping.</p>
-<button id="logout" class="secondary">Sign out</button>
-</header>
+    <section id="galleryPage" class="hidden">
+      <header>
+        <p>FRIENDS, PHOTOS, AND GOOD TIMES</p>
+        <h1>Our Memories</h1>
+        <p>Good times, funny moments, and memories worth keeping.</p>
+        <button id="logout" type="button">Log out</button>
+      </header>
 
-<section class="panel upload">
-<div>
-<h2>Add a memory</h2>
-<p class="muted">Save a photo and a caption from a good time.</p>
-</div>
+      <section>
+        <h2>Add a memory</h2>
+        <p>Save a photo and a caption from a good time.</p>
 
-<form id="uploadForm">
-<label>Photo (max 5 MB)</label>
-<input id="photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required>
+        <form id="uploadForm">
+          <label for="photo">Choose a photo</label>
+          <input
+            id="photo"
+            name="photo"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            required
+          >
 
-<label>Caption</label>
-<input id="caption" maxlength="160" placeholder="What was happening?">
+          <label for="caption">Caption (optional)</label>
+          <input
+            id="caption"
+            name="caption"
+            type="text"
+            placeholder="Add a caption"
+          >
 
-<button id="uploadBtn">Add photo</button>
-<p id="uploadMsg" class="msg"></p>
-</form>
-</section>
+          <button id="uploadBtn" type="submit">Upload photo</button>
+          <p id="uploadMsg" role="status"></p>
+        </form>
+      </section>
 
-<div class="galleryTitle">
-<h2>Photo gallery</h2>
-<span id="count" class="muted"></span>
-</div>
+      <section>
+        <h2>Memories</h2>
+        <p id="count">0 memories</p>
+        <p id="galleryMsg" role="status"></p>
+        <div id="gallery"></div>
+      </section>
+    </section>
 
-<div id="gallery" class="gallery"></div>
-<p id="galleryMsg" class="msg"></p>
-
-<footer>Memories worth keeping.</footer>
-</section>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="app.js"></script>
+    <footer>
+      <p>Memories worth keeping.</p>
+    </footer>
+  </main>
 </body>
 </html>
 ```
